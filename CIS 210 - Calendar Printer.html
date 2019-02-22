@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!-- saved from url=(0074)https://classes.cs.uoregon.edu/16F/cis210/assignments/W3-CalendarPrint.php -->
+<html class="gr__classes_cs_uoregon_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- This is for the <head> section of CIS210 pages,
+     not for the page header in the <body> section. 
+   Include here metadata including css links, etc., 
+   but omit the <title> element which may be specific
+   to each page. 
+   Set $root before calling this.
+-->
+
+
+<meta name="description" content="CIS 210, Computer Science 1">
+<meta name="keywords" content="Computer science, CS1"> 
+<meta name="author" content="Michal Young"> 
+
+   <link rel="stylesheet" type="text/css" href="./CIS 210 - Calendar Printer_files/cis210.css" media="screen">
+   <link rel="stylesheet" type="text/css" href="./CIS 210 - Calendar Printer_files/cis210-print.css" media="print">
+
+<title>CIS 210 - Calendar Printer</title></head>
+
+<body data-gr-c-s-loaded="true">
+<div class="container">
+
+  <!-- pagehead.php: Page header to include on each page -->
+
+<div class="pageheader">
+   <div class="title">
+   <h1>CIS 210, Fall 2016<br> Introduction to Computer Science</h1>
+   </div> <!-- title -->
+   </div> <!-- pageheader -->
+<!-- end pagehead.php -->
+  <!-- sidebar.php:  Sidebar to be replicated on each page 
+     Note links must be relative to site URL-->
+<div class="sidenav">
+   <h1>Main Menu</h1>
+   <ul>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/index.php">Class home page</a></li>
+   <li><a href="https://piazza.com/uoregon/fall2016/cis210/home">Piazza</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/hints.php">How to Succeed</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/schedule.php">Schedule</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/assignments.php">Assignments</a></li>
+   <li><a href="https://classes.cs.uoregon.edu/16F/cis210/references.php">References</a></li>
+  <li><a href="https://classes.cs.uoregon.edu/16F/cis210/exams.php">Exams</a></li>
+<!--
+  <li><a href="/16F/cis210/assignments/Contest.php" >Contest</a></li>
+-->
+   </ul>
+</div>
+
+<div class="content">
+
+<div class="item">
+  <h1>Assignment 3, part 1: Printing a calendar</h1>
+<p>This assignment is due at 5pm on Friday, October 14.  Use
+  Canvas to turn calpr.py in electronically.</p>
+<h1>Purpose</h1>
+<p>Sometimes we can't write a single loop that processes a whole
+  collection.  We may need to treat the first and/or the last elements
+  separately from those in the middle.  
+  Such algorithms are often called
+  “fencepost algorithms”, because there is a first
+  fencepost, then several full sections of fence separated by
+  fenceposts, then a last fencepost.  This project is to think through
+  a fencepost algorithm:  printing the first (partial) week of a
+  month, then the full weeks, then the last (partial) week. 
+  </p>
+
+<h1>Pair Assignment</h1>
+  <p>You are encouraged to use <em>pair programming</em> to
+  complete this assignment. Work together with one classmate.
+  </p>
+  <p>Before writing code at the computer, you should work together and
+  independently on the design.  Each of you should be able to clearly
+  explain how the program or a part of the program will work.  
+  When you are convinced that you both understand how the code will
+  work, then and only then are you ready to write the code.</p>
+</div>
+
+
+<div class="item">
+<h1>Printing a calendar</h1>
+  <p>Calendars are traditionally organized into weeks, beginning (at
+  least in the U.S.) on Sunday.  The first and last week may be
+  partial, as in October 2013: 
+</p>
+<pre> Su Mo Tu We Th Fr Sa
+        1  2  3  4  5
+  6  7  8  9 10 11 12
+ 13 14 15 16 17 18 19
+ 20 21 22 23 24 25 26
+ 27 28 29 30 31
+</pre>
+
+
+  <h2>Requirements</h2>
+  <p>Your program will take two integers, a month number (1-12) and a
+  year number (1-2100) from the command line.  It will then print a
+  calendar in (exactly) the format shown above.  For example: 
+  </p>
+<kbd>
+<pre>&gt; python3 calpr.py 11 2013
+ Su Mo Tu We Th Fr Sa
+                 1  2
+  3  4  5  6  7  8  9
+ 10 11 12 13 14 15 16
+ 17 18 19 20 21 22 23
+ 24 25 26 27 28 29 30
+</pre></kbd>
+
+<p>We will use the datetime module of the Python library to determine
+  which day of the week a month starts on.  We will not use the
+  calendar module ... because it has a function to completely lay out
+  the calendar, and the point is for us to write that ourselves.
+  </p>
+
+  <p>To avoid additional complexity, we will treat February as always
+  having 28 days, even in leap years, and all months having their
+  current lengths.  (We are ignoring alternative and
+  earlier versions of the calendar,
+  and some historical adjustments.  For example, in 1712 February had
+  30 days, but we will treat it as if it had 28.)
+  </p>
+
+ 
+<h1>Notes and hints on the calendar printer</h1>
+  <p>I have provided
+  <a href="https://classes.cs.uoregon.edu/16F/cis210/assignments/base/calpr.py">quite a bit of starter code</a>; your task
+  is to figure out the logic of breaking a month down into a
+  starting week, full weeks in the middle, and (possibly) a partial
+  ending week.  I have provided some pseudocode to help, but it will
+  take careful thinking and design (and, almost certainly, a few
+  rounds of testing and revision) to turn it into code that works
+  correctly.</p>
+
+  <p>The initial loop that I have provided demonstrates how to
+  print some parts of a line without moving to a new line. This
+  involves using a “keyword argument” <kbd>end=""</kbd>.
+  It also uses the <kbd>format</kbd> function to make each day
+  number print right-justified in a field of exactly 3 characters. 
+  </p>
+  
+  <p>Please name your program file <tt>calpr.py</tt>.  Consistent
+  naming makes life a little easier for your grader, and helps him
+  return graded homeworks to you faster. Follow the format
+  above precisely.</p>
+
+
+</div>
+<div class="item">
+<h1>Grading</h1>
+<p>35 points possible</p>
+  <ul>
+    <li>15: Program runs and consistently produces correct
+    output for any month and year from January 1800 to
+    December 2525.   
+    </li>
+
+    <li>10: Follows <a href="https://classes.cs.uoregon.edu/16F/cis210/handouts/styleguide.php">CIS 210 coding guidelines</a>, including author
+    identification and header .</li>
+    <li>10: Clarity.  The program should not only be consistent with
+    the requirements and approach described here, but it should be
+    very easy to read the program and verify its consistency with the
+    spec. </li>
+   </ul>
+</div>
+
+
+</div> <!-- class content -->
+
+<!-- pagefoot.php: Page footing to include on each page -->
+<div class="clearer">  </div>
+   <div class="footer">
+
+   <span style="float: left">
+   Contact <a href="mailto:jsventek@uoregon.edu?subject=CIS%20210%20web%20site">webmaster</a>.
+   </span>
+   <span style="float: right">  Based loosely on Transparentia design by Arcsin, from OSWD.org. </span>
+      &nbsp; <!-- Space to put the two floats above.  Setting text justification does not seem to do it. -->
+   </div>
+<!-- Track our traffic ?? -->
+<!-- End pagefoot.php -->
+
+</div> <!-- class container -->
+
+
+
+
+</body><span class="gr__tooltip"><span class="gr__tooltip-content"></span><i class="gr__tooltip-logo"></i><span class="gr__triangle"></span></span></html>
